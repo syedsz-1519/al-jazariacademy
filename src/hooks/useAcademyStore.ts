@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { CURRICULUM_SURAHS, makeAyahKey } from '../data/curriculum';
 import {
   AcademyProgressState,
+  EnrollmentRecord,
+  EnrollmentTrack,
   HifzStatus,
   ReaderPreferences,
   ReflectionNote,
@@ -89,6 +91,7 @@ const INITIAL_PROGRESS_STATE: AcademyProgressState = {
     showTranslation: true,
     dailyAyahGoal: 7,
   },
+  enrollment: null,
 };
 
 function loadInitialState(): AcademyProgressState {
@@ -116,6 +119,7 @@ function loadInitialState(): AcademyProgressState {
       reflectionNotes: Array.isArray(parsed.reflectionNotes)
         ? parsed.reflectionNotes
         : INITIAL_PROGRESS_STATE.reflectionNotes,
+      enrollment: parsed.enrollment ?? null,
     };
   } catch {
     return INITIAL_PROGRESS_STATE;
@@ -256,6 +260,43 @@ export function useAcademyStore() {
     }));
   }, []);
 
+  const saveEnrollment = useCallback(
+    (payload: {
+      studentName: string;
+      email: string;
+      track: EnrollmentTrack;
+      dailyMinutes: 15 | 30 | 60;
+      startingSurahId: string;
+      learningGoal: string;
+    }) => {
+      const record: EnrollmentRecord = {
+        studentName: payload.studentName.trim(),
+        email: payload.email.trim(),
+        track: payload.track,
+        dailyMinutes: payload.dailyMinutes,
+        startingSurahId: payload.startingSurahId,
+        learningGoal: payload.learningGoal.trim(),
+        enrolledAt: new Date().toISOString(),
+      };
+      const goalMap: Record<15 | 30 | 60, number> = {
+        15: 5,
+        30: 8,
+        60: 12,
+      };
+      setState((prev) => ({
+        ...prev,
+        activeSurahId: payload.startingSurahId,
+        activeAyahNumber: 1,
+        preferences: {
+          ...prev.preferences,
+          dailyAyahGoal: goalMap[payload.dailyMinutes],
+        },
+        enrollment: record,
+      }));
+    },
+    []
+  );
+
   const resetProgress = useCallback(() => {
     setState(INITIAL_PROGRESS_STATE);
   }, []);
@@ -329,6 +370,7 @@ export function useAcademyStore() {
     addOrUpdateReflectionNote,
     deleteReflectionNote,
     updatePreferences,
+    saveEnrollment,
     resetProgress,
     exportProgressJson,
   };

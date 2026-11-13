@@ -1,25 +1,27 @@
 import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { WorkspaceView } from '../types/academy';
 import { AcademyCrestIcon } from './StarMotif';
 
 interface TopNavProps {
   activeView: WorkspaceView;
+  isEnrolled: boolean;
   onNavigate: (view: WorkspaceView) => void;
-  onResumeStudy: () => void;
+  onOpenEnroll: () => void;
 }
 
 const NAV_ITEMS: { id: WorkspaceView; label: string }[] = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'reader', label: 'Tajweed Reader' },
-  { id: 'hifz', label: 'Hifz Tracker' },
-  { id: 'tafseer', label: 'Tafseer Journal' },
+  { id: 'home', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'ilm-hub', label: 'Ilm Hub' },
+  { id: 'contact', label: 'Contact' },
 ];
 
 export const TopNav: React.FC<TopNavProps> = ({
   activeView,
+  isEnrolled,
   onNavigate,
-  onResumeStudy,
+  onOpenEnroll,
 }) => {
   return (
     <header className="sticky top-0 z-30 bg-[#FFFFFF]/95 backdrop-blur-sm border-b border-[#E1E6F2]">
@@ -27,7 +29,7 @@ export const TopNav: React.FC<TopNavProps> = ({
         {/* Zone 1: Brand Wordmark + Crest */}
         <button
           type="button"
-          onClick={() => onNavigate('overview')}
+          onClick={() => onNavigate('home')}
           className="flex items-center gap-3 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17316B]/30 rounded-[12px] py-1 pr-2 shrink-0 cursor-pointer"
         >
           <AcademyCrestIcon className="w-9 h-9 shrink-0" />
@@ -60,20 +62,20 @@ export const TopNav: React.FC<TopNavProps> = ({
           })}
         </nav>
 
-        {/* Zone 3: Primary Action */}
+        {/* Zone 3: Enrollment Primary Action */}
         <div className="shrink-0">
           <button
             type="button"
-            onClick={onResumeStudy}
-            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-[14px] bg-[#17316B] hover:bg-[#0F2250] text-[#FFFFFF] text-[14px] font-medium transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17316B]/40"
+            onClick={onOpenEnroll}
+            className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-[14px] bg-[#C8A35A] hover:bg-[#B89247] text-[#0F2250] text-[14px] font-semibold transition-colors duration-150 whitespace-nowrap shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#17316B]/40"
           >
-            <span>Resume Study</span>
-            <ArrowRight className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 shrink-0" />
+            <span>{isEnrolled ? 'Enrollment' : 'Enroll Now'}</span>
           </button>
         </div>
       </div>
 
-      {/* Compact Mobile Navigation Row (single line, horizontally scrollable) */}
+      {/* Compact Mobile Navigation Row */}
       <nav
         aria-label="Mobile sections"
         className="md:hidden border-t border-[#E1E6F2] bg-[#FFFFFF] px-4 py-2 flex items-center gap-1.5 overflow-x-auto"

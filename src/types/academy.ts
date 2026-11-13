@@ -1,4 +1,22 @@
-export type WorkspaceView = 'overview' | 'reader' | 'hifz' | 'tafseer';
+export type WorkspaceView = 'home' | 'about' | 'ilm-hub' | 'contact';
+
+export type IlmHubTab = 'reader' | 'hifz' | 'tafseer';
+
+export type EnrollmentTrack =
+  | 'Foundational Tajweed'
+  | 'Hifz Memorization Cohort'
+  | 'Tafseer & Contemplation'
+  | 'Complete Ilm Hub Track';
+
+export interface EnrollmentRecord {
+  studentName: string;
+  email: string;
+  track: EnrollmentTrack;
+  dailyMinutes: 15 | 30 | 60;
+  startingSurahId: string;
+  learningGoal: string;
+  enrolledAt: string;
+}
 
 export type TajweedRuleType =
   | 'ghunnah'
@@ -104,4 +122,5 @@ export interface AcademyProgressState {
   bookmarkedAyahs: string[];
   reflectionNotes: ReflectionNote[];
   preferences: ReaderPreferences;
+  enrollment: EnrollmentRecord | null;
 }

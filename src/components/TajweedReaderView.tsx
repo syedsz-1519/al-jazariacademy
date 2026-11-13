@@ -19,9 +19,9 @@ import {
 import {
   AcademyProgressState,
   ArabicSegment,
+  IlmHubTab,
   ReaderPreferences,
   TajweedRuleType,
-  WorkspaceView,
 } from '../types/academy';
 
 interface TajweedReaderViewProps {
@@ -30,7 +30,7 @@ interface TajweedReaderViewProps {
   onToggleRecited: (ayahKey: string) => void;
   onToggleBookmark: (ayahKey: string) => void;
   onUpdatePreferences: (partial: Partial<ReaderPreferences>) => void;
-  onJumpToModule: (view: WorkspaceView, surahId: string, ayahNumber: number) => void;
+  onJumpToModule: (tab: IlmHubTab, surahId: string, ayahNumber: number) => void;
 }
 
 const RULE_ORDER: TajweedRuleType[] = [
