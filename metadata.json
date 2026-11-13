@@ -1,0 +1,6 @@
+{
+  "name": "Al-Jazari Academy",
+  "description": "Academic Quranic learning workspace for Tajweed recitation, Hifz memorization, and Tafseer reflection.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
